@@ -112,15 +112,15 @@ Sistema_delivery_logistica/
 
 | Nome | Responsabilidade |
 |------|------------------|
-| <!-- NOME --> | Frota |
-| <!-- NOME --> | Tracking |
-| <!-- NOME --> | Despacho |
+| Letícia | Frota |
+| Glauco | Tracking |
+| Gabriela | Despacho |
 
 ---
 
 ## Stack
 
-- Linguagem/Framework: <!-- PREENCHER -->
-- Banco de dados: <!-- PREENCHER -->
+- Linguagem/Framework: Java com Springboot
+- Banco de dados: PostgreSql com supabase
 - Documentação: OpenAPI / Swagger
 - Conteinerização: Docker + Docker Compose
