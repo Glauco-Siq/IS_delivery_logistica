@@ -10,8 +10,7 @@ Este repositório concentra **3 microsserviços independentes**, com bancos de d
 
 | Item | Link |
 |------|------|
-| Documento de Requisitos | <!-- COLE O LINK AQUI --> |
-| Diagrama de Arquitetura / Integração | <!-- COLE O LINK AQUI --> |
+| Documento de Requisitos / Requesitos de integração e diagrama de interação|https://docs.google.com/document/d/ 1cTmyvEhYWWtLpTlg_qPy8_X4fBsfC15etOM6hV-Cf4g/edit?usp=drivesdk  |
 | Swagger — Frota | http://localhost:8010/docs |
 | Swagger — Tracking | http://localhost:8011/docs |
 | Swagger — Despacho | http://localhost:8012/docs |
