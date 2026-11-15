@@ -31,7 +31,7 @@ public class EntregadorController {
     public ResponseEntity<EntregadorResponse> cadastrarEntregador(@RequestBody EntregadorRequestDto entregadorRequestDto){
         return ResponseEntity.status(HttpStatus.CREATED).body(entregadorService.cadastrarEntregador(entregadorRequestDto));
     }
-    @GetMapping("/{statusEntregador}")
+    @GetMapping("/status/{statusEntregador}")
     public ResponseEntity<List<EntregadorResponse>> listaEntregadoresPorStatus(@PathVariable StatusEntregador statusEntregador){
         List<EntregadorResponse> responses = entregadorService.listarEntregadoresPorStatus(statusEntregador);
         return ResponseEntity.ok(responses);
@@ -40,6 +40,11 @@ public class EntregadorController {
     public ResponseEntity<List<EntregadorResponse>> listaEntregadores(){
         List<EntregadorResponse> responses = entregadorService.listarEntregadores();
         return ResponseEntity.ok(responses);
+    }
+    @GetMapping("/{id}")
+    public ResponseEntity<EntregadorResponse> consultarEntregadorPorId(@PathVariable UUID id){
+        EntregadorResponse response = entregadorService.consultarEntregador(id);
+        return ResponseEntity.ok(response);
     }
     @PutMapping("/{id}")
     public ResponseEntity<EntregadorResponse> atualizarDados(@PathVariable UUID id, @RequestBody EntregadorAtualizacaoDto entregadorAtualizacaoDto){
