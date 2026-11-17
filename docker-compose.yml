@@ -1,0 +1,64 @@
+# Logística (Equipe 4) — bancos de dados
+# Um Postgres por serviço (Database per Service).
+# Por enquanto só os bancos; os serviços entram aqui quando os Dockerfiles estiverem prontos.
+#
+# Subir:   docker compose up -d
+# Parar:   docker compose down
+# Zerar:   docker compose down -v   (apaga os dados)
+
+services:
+  frota-db:
+    image: postgres:16-alpine
+    container_name: frota-db
+    environment:
+      POSTGRES_DB: frota
+      POSTGRES_USER: frota
+      POSTGRES_PASSWORD: frota
+    ports:
+      - "5410:5432"
+    volumes:
+      - frota-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U frota -d frota"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  tracking-db:
+    image: postgres:16-alpine
+    container_name: tracking-db
+    environment:
+      POSTGRES_DB: tracking
+      POSTGRES_USER: tracking
+      POSTGRES_PASSWORD: tracking
+    ports:
+      - "5411:5432"
+    volumes:
+      - tracking-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U tracking -d tracking"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  despacho-db:
+    image: postgres:16-alpine
+    container_name: despacho-db
+    environment:
+      POSTGRES_DB: despacho
+      POSTGRES_USER: despacho
+      POSTGRES_PASSWORD: despacho
+    ports:
+      - "5412:5432"
+    volumes:
+      - despacho-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U despacho -d despacho"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+volumes:
+  frota-data:
+  tracking-data:
+  despacho-data:
