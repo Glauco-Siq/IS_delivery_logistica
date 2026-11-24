@@ -41,6 +41,17 @@ services:
       timeout: 3s
       retries: 10
 
+  tracking:
+    build: ./tracking
+    ports:
+      - "8011:8011"
+    environment:
+      DATASOURCE_URL : "jdbc:postgresql://tracking-db:5432/tracking"
+    depends_on:
+      tracking-db:
+        condition: service_healthy
+
+
   despacho-db:
     image: postgres:16-alpine
     container_name: despacho-db
