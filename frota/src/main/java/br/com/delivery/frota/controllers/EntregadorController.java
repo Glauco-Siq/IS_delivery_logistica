@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/entregadores")
+@RequestMapping("/api/v1/entregadores")
 public class EntregadorController {
     @Autowired
     EntregadorService entregadorService;

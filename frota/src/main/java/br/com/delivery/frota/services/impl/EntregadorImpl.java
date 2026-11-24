@@ -31,6 +31,7 @@ public class EntregadorImpl implements EntregadorService {
         if (entregadorRepository.existsByTelefone(entregadorRequestDto.getTelefone())){
             throw new IllegalArgumentException("Não é permitida a criação de outro entregador com o mesmo telefone.");
         }
+
         Entregador entregador = new Entregador();
         entregador.setCpf(entregadorRequestDto.getCpf());
         entregador.setNome(entregadorRequestDto.getNome());
