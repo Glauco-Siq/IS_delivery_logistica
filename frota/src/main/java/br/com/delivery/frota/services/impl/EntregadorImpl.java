@@ -6,6 +6,8 @@ import br.com.delivery.frota.entities.DTOs.EntregadorRequestDto;
 import br.com.delivery.frota.entities.DTOs.EntregadorResponse;
 import br.com.delivery.frota.entities.DTOs.mappers.EntregadorMapper;
 import br.com.delivery.frota.entities.Entregador;
+import br.com.delivery.frota.exceptions.CampoNaoInformadoException;
+import br.com.delivery.frota.exceptions.RecursoNaoEncontradoException;
 import br.com.delivery.frota.repositories.EntregadorRepository;
 import br.com.delivery.frota.services.interfaces.EntregadorService;
 import java.util.List;
@@ -18,9 +20,7 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class EntregadorImpl implements EntregadorService {
-    @Autowired
     private final EntregadorRepository entregadorRepository;
-    @Autowired
     private final EntregadorMapper entregadorMapper;
 
     @Override
@@ -57,16 +57,28 @@ public class EntregadorImpl implements EntregadorService {
 
     @Override
     public EntregadorResponse consultarEntregador(UUID idEntregador) {
-        Entregador entregador = entregadorRepository.findById(idEntregador).orElseThrow(() ->new RuntimeException("Entregador não encontrado"));
+        Entregador entregador = entregadorRepository.findById(idEntregador).orElseThrow(() ->new RecursoNaoEncontradoException("Entregador não encontrado."));
         return entregadorMapper.entityToResponseDto(entregador);
     }
 
     @Override
     public EntregadorResponse atualizarDadosEntregador(UUID idEntregador, EntregadorAtualizacaoDto entregadorAtualizacaoDto) {
-        Entregador entregador = entregadorRepository.findById(idEntregador).orElseThrow(() -> new RuntimeException("Entregador não encontrado"));
+        Entregador entregador = entregadorRepository.findById(idEntregador).orElseThrow(() -> new RecursoNaoEncontradoException("Entregador não encontrado"));
+        if (entregadorAtualizacaoDto.getNome()  == null || entregadorAtualizacaoDto.getNome().isBlank()){
+            throw new CampoNaoInformadoException("O campo de nome do entregador não foi preenchido.");
+        }
         entregador.setNome(entregadorAtualizacaoDto.getNome());
+        if (entregadorAtualizacaoDto.getTelefone()  == null ||entregadorAtualizacaoDto.getTelefone().isBlank()){
+            throw new CampoNaoInformadoException("O campo de telefone do entregador não foi preenchido.");
+        }
         entregador.setTelefone(entregadorAtualizacaoDto.getTelefone());
+        if (entregadorAtualizacaoDto.getTipoVeiculo()  == null || entregadorAtualizacaoDto.getTipoVeiculo().isBlank()){
+            throw new CampoNaoInformadoException("O campo de tipo de veículo do entregador não foi preenchido.");
+        }
         entregador.setTipoVeiculo(entregadorAtualizacaoDto.getTipoVeiculo());
+        if (entregadorAtualizacaoDto.getPlaca()  == null || entregadorAtualizacaoDto.getPlaca().isBlank()){
+            throw new CampoNaoInformadoException("O campo de placa do veículo do entregador não foi preenchido");
+        }
         entregador.setPlaca(entregadorAtualizacaoDto.getPlaca());
         Entregador entregadorAtualizado = entregadorRepository.save(entregador);
         return entregadorMapper.entityToResponseDto(entregadorAtualizado);
@@ -74,7 +86,7 @@ public class EntregadorImpl implements EntregadorService {
 
     @Override
     public EntregadorResponse alterarStatusEntregador(UUID idEntregador, StatusEntregador statusEntregador) {
-        Entregador entregador = entregadorRepository.findById(idEntregador).orElseThrow(() -> new RuntimeException("Entregador não encontrado"));
+        Entregador entregador = entregadorRepository.findById(idEntregador).orElseThrow(() -> new RecursoNaoEncontradoException("Entregador não encontrado"));
         entregador.setStatusEntregador(statusEntregador);
         Entregador entregadorAtualizado = entregadorRepository.save(entregador);
         return entregadorMapper.entityToResponseDto(entregadorAtualizado);
@@ -82,7 +94,7 @@ public class EntregadorImpl implements EntregadorService {
 
     @Override
     public void removerEntregador(UUID idEntregador) {
-        Entregador entregador = entregadorRepository.findById(idEntregador).orElseThrow(() -> new RuntimeException("Entregador não encontrado"));
+        Entregador entregador = entregadorRepository.findById(idEntregador).orElseThrow(() -> new RecursoNaoEncontradoException("Entregador não encontrado"));
         entregadorRepository.delete(entregador);
     }
 }
